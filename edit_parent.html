@@ -1,0 +1,52 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static', filename='js/parent.js') }}"></script>
+<body>
+    {% include 'top_menus.html' %}
+    <div class="container">
+        {% include 'left_menus.html' %}
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <a href="#"><strong><span class="ti-home"></span> Edit Parent</strong></a>
+                    <hr>
+                    {% for parent in parents %}
+                    <form method="post" enctype="multipart/form-data" action="{{ url_for('save_parent', student_id=parent.student_id) }}">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="first_name">First Name</label>
+                                <input type="text" class="form-control" name="first_name" value="{{ parent.first_name }}" >
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Last Name</label>
+                                <input type="text" class="form-control" name="last_name" value="{{ parent.last_name }}" >
+                            </div>
+                            <div class="form-group">
+                                <label for="student_id">Student ID</label>
+                                <input type="text" class="form-control" name="student_id" value="{{ parent.student_id }}" >
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_no">Phone No</label>
+                                <input type="text" class="form-control" name="phone_no" value="{{ parent.phone_no }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="relationship_with_student">Relationship with Student</label>
+                                <input type="text" class="form-control" name="relationship_with_student" value="{{ parent.relationship_with_student }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" name="email" value="{{ parent.email }}">
+                            </div>
+                        </div>  
+                        <div class="modal-footer">
+                            <input type="hidden" name="action" value="updateParent" />
+                            <input type="submit" class="btn btn-info" value="Save" />
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>  
+                    </form>
+                    {% endfor %}                        
+                </div>  
+            </div>
+        </div>  
+    </div> 
+</body>
+</html>

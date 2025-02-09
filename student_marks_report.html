@@ -1,0 +1,32 @@
+<!-- student_marks_report.html -->
+
+{% include 'header.html' %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script src="{{ url_for('static', filename='js/student_marks_report.js') }}"></script>
+<body>
+    {% include 'top_menus.html' %}
+    <div class="container">        
+        {% include 'left_menus.html' %}    
+        <div class="content">
+            <div class="container-fluid">   
+                <div class="row">
+                    <h1>Student Marks Report</h1>
+                    <hr>
+                    <div class="form-group">
+                        <label for="student_id">Select Student ID:</label>
+                        <select class="form-control" id="student_id" onchange="fetchStudentMarks(this.value)">
+                            <option value="">Select Student ID</option>
+                            {% for student_id in student_ids %}
+                            <option value="{{ student_id }}">{{ student_id }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div id="marks_report"></div>
+                    <canvas id="marks_chart" width="400" height="200"></canvas> <!-- Canvas for chart -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

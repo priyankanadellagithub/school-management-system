@@ -1,0 +1,34 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static', filename='js/class.js') }}"></script>
+<body>
+    {% include 'top_menus.html' %}
+    <div class="container">        
+        {% include 'left_menus.html' %}    
+        <div class="content">
+            <div class="container-fluid">   	
+                <div class="row">
+                    <a href="#"><strong><span class="ti-crown"></span> Edit Class</strong></a>
+                    <hr>
+                    {% for class in classes %}
+                    <form method="post" action="{{ url_for('save_class')}}"> <!-- Removed ID attribute -->
+                        <div class="form-group">
+                            <label for="class_id" class="control-label">Class ID*</label>
+                            <input type="text" class="form-control" name="class_id" placeholder="Class ID" value="{{ class.class_id }}" readonly/ > <!-- Updated value attribute -->
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="control-label">Class Name*</label>
+                            <input type="text" class="form-control" name="name" placeholder="Class Name" value="{{ class.name }}" required> <!-- Updated value attribute -->
+                        </div>   
+                        <div class="modal-footer">
+                            <input type="hidden" name="action" value="updateClass" /> <!-- Removed ID attribute -->
+                            <input type="submit" name="save" class="btn btn-info" value="Save" />
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>                     
+                    </form>
+                    {% endfor %}                        
+                </div>    
+            </div>
+        </div>    
+    </div> 
+</body>
+</html>

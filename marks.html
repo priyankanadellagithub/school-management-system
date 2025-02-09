@@ -1,0 +1,75 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static', filename='js/marks.js') }}"></script>
+<body>
+    {% include 'top_menus.html' %}
+    <div class="container">
+        {% include 'left_menus.html' %}
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <a href="#"><strong><span class="ti-pencil-alt"></span> Marks Section</strong></a>
+                    <hr>
+                    <div class="float-right mb-2 col-md-2">
+                        <button type="button" id="addMarks" class="btn btn-info" title="Add Marks"><i class="fas fa-plus"></i> Add</button>
+                    </div>
+                    <br><br>
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Student ID</th>
+                            <th>Course ID</th>
+                            <th>Marks Scored</th>
+                            <th>Actions</th>                  
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for mark in marks %}
+                          <tr>
+                            <td>{{ mark.student_id }}</td>
+                            <td>{{ mark.course_id }}</td>
+                            <td>{{ mark.marks_scored }}</td>
+                            <td>
+                                <a href="{{ url_for('edit_marks', student_id=mark.student_id, course_id=mark.course_id) }}" id="{{ mark.student_id }}-{{ mark.course_id }}" class="btn btn-primary update">Edit</a>
+                                <a href="{{ url_for('delete_marks', student_id=mark.student_id, course_id=mark.course_id) }}" class="btn btn-danger">Delete</a>
+                            </td>
+                          </tr> 
+                        {% endfor %}     
+                        </tbody>
+                    </table>            
+                    <hr> 
+                </div>
+            </div>  
+        </div>  
+    </div>
+    <div id="marksModal" class="modal fade">
+        <div class="modal-dialog">
+            <form method="post" id="marksForm" action="{{ url_for('save_marks') }}">
+                <div class="modal-content">
+                    <div class="modal-header">                        
+                        <h4 class="modal-title"><i class="fa fa-plus"></i> Add Marks</h4>
+                    </div>
+                    <div class="modal-body">     
+                        <div class="form-group">
+                            <label for="student_id" class="control-label">Student ID</label>
+                            <input type="text" name="student_id" id="student_id" class="form-control" placeholder="Student ID" required>
+                        </div>                      
+                        <div class="form-group">                            
+                            <label for="course_id" class="control-label">Course ID</label>                        
+                            <input type="text" name="course_id" id="course_id" class="form-control" placeholder="Course ID" required>                                        
+                        </div>                      
+                        <div class="form-group">
+                            <label for="marks_scored" class="control-label">Marks Scored</label>                
+                            <input type="text" name="marks_scored" id="marks_scored" class="form-control" placeholder="Marks Scored" required>                                        
+                        </div>                                                                      
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="action" id="action" value="" />
+                        <input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static', filename='js/parent.js') }}"></script>
+<body>
+    {% include 'top_menus.html' %}
+    <div class="container">
+        {% include 'left_menus.html' %}
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <a href="#"><strong><span class="ti-home"></span> Parent Section</strong></a>
+                    <hr>
+                    <div class="float-right mb-2 col-md-2">
+                        <button type="button" id="addParent" class="btn btn-info" title="Add parent"><i class="fas fa-plus"></i> Add</button>
+                    </div>
+                    <br><br>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Student ID</th>
+                                <th>Phone No</th>
+                                <th>Relationship with Student</th>
+                                <th>Email</th>
+                                <th>Actions</th>                  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for parent in parents %}
+                            <tr>
+                                <td>{{ parent.first_name }}</td>
+                                <td>{{ parent.last_name }}</td>
+                                <td>{{ parent.student_id }}</td>
+                                <td>{{ parent.phone_no }}</td>
+                                <td>{{ parent.relationship_with_student }}</td>
+                                <td>{{ parent.email}}</td>
+                                <td>
+                                    <a href="{{ url_for('edit_parent', first_name=parent.first_name, last_name=parent.last_name, student_id=parent.student_id) }}" class="btn btn-primary update">Edit</a>
+                                    <a href="{{ url_for('delete_parent', first_name=parent.first_name, last_name=parent.last_name, student_id=parent.student_id) }}" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr> 
+                            {% endfor %}     
+                        </tbody>
+                    </table>            
+                    <hr> 
+                </div>
+            </div>  
+        </div>  
+    </div>
+    <div id="parentModal" class="modal fade">
+        <div class="modal-dialog">
+            <form method="post" id="parentForm" action="{{ url_for('save_parent') }}">
+                <div class="modal-content">
+                    <div class="modal-header">                        
+                        <h4 class="modal-title"><i class="fa fa-plus"></i> Add Parent</h4>
+                    </div>
+                    <div class="modal-body">     
+                        <div class="form-group">							
+                            <label for="first_name" class="control-label">First Name*</label>				
+                            <input type="text" name="first_name" id="first_name" autocomplete="off" class="form-control" placeholder="First Name" required >										
+                        </div>	               
+                        <div class="form-group">                            
+                            <label for="last_name" class="control-label">Last Name*</label>                        
+                            <input type="text" name="last_name" id="last_name" autocomplete="off" class="form-control" placeholder="Last Name" required>                                        
+                        </div>                      
+                        <div class="form-group">
+                            <label for="student_id" class="control-label">Student ID*</label>                
+                            <input type="text" name="student_id" id="student_id" autocomplete="off" class="form-control" placeholder="Student ID" required>                                        
+                        </div>                      
+                        <div class="form-group">
+                            <label for="phone_no" class="control-label">Phone No*</label>                
+                            <input type="text" name="phone_no" id="phone_no" autocomplete="off" class="form-control" placeholder="Phone No" required>                                        
+                        </div>                      
+                        <div class="form-group">
+                            <label for="relationship_with_student" class="control-label">Relationship with Student*</label>                
+                            <input type="text" name="relationship_with_student" id="relationship_with_student" autocomplete="off" class="form-control" placeholder="Relationship with Student" required>                                        
+                        </div> 
+                        <div class="form-group">
+                            <label for="email" class="control-label">Email*</label>                
+                            <input type="text" name="email" id="email" autocomplete="off" class="form-control" placeholder="Email" required>                                        
+                        </div>                                              
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="parent_id" id="parent_id" />                        
+                        <input type="hidden" name="action" id="action" value="" />
+                        <input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+                        <button type="button" id="closeButton" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

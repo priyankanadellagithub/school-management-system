@@ -1,0 +1,30 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static', filename='js/student_details.js') }}"></script>
+<body>
+    {% include 'top_menus.html' %}
+    <div class="container">        
+        {% include 'left_menus.html' %}    
+        <div class="content">
+            <div class="container-fluid">   
+                <div class="row">
+                    <h1>Student Details</h1>
+                    <hr>
+                    <div class="form-group">
+                        <label for="class_id">Select Class ID:</label>
+                        <select class="form-control" id="class_id" onchange="fetchStudentsInClass(this.value)">
+                            <option value="">Select Class ID</option>
+                            {% for class_id in class_ids %}
+                            <option value="{{ class_id['class_id'] }}">{{ class_id['class_id'] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div id="students_list"></div>
+                    <hr>
+                    <div id="students_count"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

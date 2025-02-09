@@ -1,0 +1,81 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static', filename='js/course.js') }}"></script>
+<body>
+    {% include 'top_menus.html' %}
+    <div class="container">
+        {% include 'left_menus.html' %}
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <a href="#"><strong><span class="ti-crown"></span> Courses Section</strong></a>
+                    <hr>
+                    <div class="float-right mb-2 col-md-2">
+                        <button type="button" id="addCourse" class="btn btn-info" title="Add Course"><i class="fas fa-plus"></i> Add</button>
+                    </div>
+                    <br><br>
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Course ID</th>
+                            <th>Name</th>
+                            <th>Teacher ID</th>
+                            <th>Class ID</th>
+                            <th>Actions</th>                  
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for course in courses %}
+                          <tr>
+                            <td>{{ course.course_id }}</td>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.teacher_id }}</td>
+                            <td>{{ course.class_id }}</td>
+                            <td>
+                                <a href="{{ url_for('edit_course', course_id=course.course_id) }}" id="{{ course.course_id }}" class="btn btn-primary update">Edit</a>
+                                <a href="{{ url_for('delete_course', course_id=course.course_id) }}" class="btn btn-danger">Delete</a>
+                            </td>
+                          </tr> 
+                        {% endfor %}     
+                        </tbody>
+                    </table>            
+                    <hr> 
+                </div>
+            </div>  
+        </div>  
+    </div>
+    <div id="courseModal" class="modal fade">
+        <div class="modal-dialog">
+            <form method="post" id="courseForm" action="{{ url_for('save_course') }}">
+                <div class="modal-content">
+                    <div class="modal-header">                        
+                        <h4 class="modal-title"><i class="fa fa-plus"></i> Add Course</h4>
+                    </div>
+                    <div class="modal-body">     
+                        <div class="form-group">
+                            <label for="course_id" class="control-label">Course ID</label>
+                            <input type="text" name="course_id" id="course_id" class="form-control" placeholder="Course ID" required>
+                        </div>                      
+                        <div class="form-group">                            
+                            <label for="name" class="control-label">Name</label>                        
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Name" required>                                        
+                        </div>                      
+                        <div class="form-group">
+                            <label for="teacher_id" class="control-label">Teacher ID</label>                
+                            <input type="text" name="teacher_id" id="teacher_id" class="form-control" placeholder="Teacher ID" required>                                        
+                        </div>                      
+                        <div class="form-group">
+                            <label for="class_id" class="control-label">Class ID</label>                
+                            <input type="text" name="class_id" id="class_id" class="form-control" placeholder="Class ID" required>                                        
+                        </div>                                              
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="action" id="action" value="" />
+                        <input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
